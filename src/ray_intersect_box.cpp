@@ -3,14 +3,14 @@
 
 double maximum(double a,double b,double c)
 {
-    double buff = a ? b : a > b;
-    return buff ? c : buff > c;
+    double buff = a > b ? a : b;
+    return buff > c ? buff : c;
 }
 
 double minimum(double a,double b,double c)
 {
-    double buff = a ? b : a < b;
-    return buff ? c : buff < c;
+    double buff = a < b ? a : b;
+    return buff < c ? buff : c;
 }
 
 bool ray_intersect_box(
