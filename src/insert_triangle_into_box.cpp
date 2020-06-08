@@ -4,14 +4,14 @@ double maximum(double a,double b,double c,double d)
 {
     double buff = a > b ? a : b;
     double buff_s = buff > c ? buff : c;
-    return buff_s > d ? buff : d;
+    return buff_s > d ? buff_s : d;
 }
 
 double minimum(double a,double b,double c,double d)
 {
     double buff = a < b ? a : b;
     double buff_s = buff < c ? buff : c;
-    return buff_s < d ? buff : d;
+    return buff_s < d ? buff_s : d;
 }
 
 void insert_triangle_into_box(
