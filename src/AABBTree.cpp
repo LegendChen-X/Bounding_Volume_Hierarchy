@@ -19,6 +19,7 @@ AABBTree::AABBTree(
     {
         this->left = objects[0];
         this->right = NULL;
+        insert_box_into_box(objects[0]->box, this->box);
     }
     else if(size==2)
     {
@@ -96,5 +97,4 @@ AABBTree::AABBTree(
         insert_box_into_box(this->left->box, this->box);
         insert_box_into_box(this->right->box, this->box);
     }
-    
 }
