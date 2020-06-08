@@ -76,12 +76,12 @@ AABBTree::AABBTree(
                 rights.push_back(objects[i]);
         }
         
-        if(lefts.size() == 0 && right.size() > 1)
+        if(lefts.size() == 0 && rights.size() > 1)
         {
             lefts.push_back(rights.back());
             rights.pop_back();
         }
-        else if(lefts.size() > 1 && right.sizes() == 0)
+        else if(lefts.size() > 1 && rights.size() == 0)
         {
             rights.push_back(lefts.back());
             lefts.pop_back();
