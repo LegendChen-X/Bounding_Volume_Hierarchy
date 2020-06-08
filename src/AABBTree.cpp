@@ -8,7 +8,7 @@ AABBTree::AABBTree(
   depth(std::move(a_depth)), 
   num_leaves(objects.size())
 {
-    int size = object.size();
+    int size = objects.size();
     
     if(size==0)
     {
@@ -31,7 +31,7 @@ AABBTree::AABBTree(
     {
         double distance_array[3][2];
         
-        for(int i=0;i<3:++i)
+        for(int i=0;i<3;++i)
         {
             double min_buff = std::numeric_limits<double>::infinity();
             double max_buff = -std::numeric_limits<double>::infinity();
@@ -76,7 +76,7 @@ AABBTree::AABBTree(
                 rights.push_back(objects[i]);
         }
         
-        if(lefts.size() == 0 && right.sizes() > 1)
+        if(lefts.size() == 0 && right.size() > 1)
         {
             lefts.push_back(rights.back());
             rights.pop_back();
