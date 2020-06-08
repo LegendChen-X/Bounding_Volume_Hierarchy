@@ -96,5 +96,5 @@ AABBTree::AABBTree(
         insert_box_into_box(this->left->box, this->box);
         insert_box_into_box(this->right->box, this->box);
     }
-        
+    
 }
