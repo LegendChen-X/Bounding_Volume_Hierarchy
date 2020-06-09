@@ -6,6 +6,9 @@ double maximum(double a,double b,double c)
     return buff > c ? buff : c;
 }
 
+/*
+ https://stackoverflow.com/questions/5254838/calculating-distance-between-a-point-and-a-rectangular-box-nearest-point
+*/
 double point_box_squared_distance(
   const Eigen::RowVector3d & query,
   const BoundingBox & box)
