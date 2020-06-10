@@ -30,6 +30,9 @@ AABBTree::AABBTree(
     }
     else
     {
+        for(int i=0;i<size;++i)
+            insert_box_into_box(objects[i]->box,this->box);
+        
         double distance_array[3][2];
         
         for(int i=0;i<3;++i)
@@ -63,38 +66,32 @@ AABBTree::AABBTree(
             }
         }
         
-        double mid = (distance_array[longest][0] + distance_array[longest][1]) / 2.0;
+        double mid = (this->box.min_corner(longest)+this->box.max_corner(longest)) / 2.0;
         
         std::vector<std::shared_ptr<Object>> lefts;
         std::vector<std::shared_ptr<Object>> rights;
         
         for(int i=0;i<size;++i)
         {
-            double position = (objects[i]->box.max_corner[longest]+objects[i]->box.min_corner[longest]) / 2.0;
-            if(position<mid)
-                lefts.push_back(objects[i]);
-            else
-                rights.push_back(objects[i]);
+            double center = (objects[i]->box.max_corner[longest]+objects[i]->box.min_corner[longest]) / 2.0;
+            if(center < mid) lefts.push_back(objects[i]);
+            else rights.push_back(objects[i]);
         }
         
-        if(lefts.size() == 0 && rights.size() > 1)
+        if(lefts.empty() && rights.size() > 1)
         {
-            lefts.push_back(rights.back());
+            this->left = rights.back();
             rights.pop_back();
         }
-        else if(lefts.size() > 1 && rights.size() == 0)
+        else if(lefts.size()==1) this->left = lefts[0];
+        else if(lefts.size() > 1) this->left = std::make_shared<AABBTree>(lefts,a_depth+1);
+        
+        if(rights.empty() && lefts.size() > 1)
         {
-            rights.push_back(lefts.back());
+            this->right = lefts.back();
             lefts.pop_back();
         }
-        
-        std::shared_ptr<AABBTree> left_child = std::make_shared<AABBTree>(lefts, a_depth+1);
-        std::shared_ptr<AABBTree> right_child = std::make_shared<AABBTree>(rights, a_depth+1);
-        
-        this->left = std::dynamic_pointer_cast<Object>(left_child);
-        this->right = std::dynamic_pointer_cast<Object>(right_child);
-        
-        insert_box_into_box(this->left->box, this->box);
-        insert_box_into_box(this->right->box, this->box);
+        else if(rights.size()==1) this->right = rights[0];
+        else if(rights.size() > 1) this->right = std::make_shared<AABBTree>(rights,a_depth+1);
     }
 }

@@ -21,10 +21,7 @@ void find_all_intersecting_pairs_using_AABBTrees(
         std::shared_ptr<AABBTree> nodeA = std::dynamic_pointer_cast<AABBTree>(ObjectA);
         std::shared_ptr<AABBTree> nodeB = std::dynamic_pointer_cast<AABBTree>(ObjectB);
         
-        if(!nodeA && !nodeB)
-        {
-            leaf_pairs.emplace_back(ObjectA,ObjectB);
-        }
+        if(!nodeA && !nodeB) leaf_pairs.emplace_back(ObjectA,ObjectB);
         else if(!nodeA)
         {
             if(box_box_intersect(ObjectA->box,nodeB->left->box))
