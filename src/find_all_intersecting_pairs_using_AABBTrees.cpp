@@ -1,12 +1,12 @@
 #include "find_all_intersecting_pairs_using_AABBTrees.h"
 #include "box_box_intersect.h"
 // Hint: use a list as a queue
-#include <list> 
+#include <list>
 
 void find_all_intersecting_pairs_using_AABBTrees(
   const std::shared_ptr<AABBTree> & rootA,
   const std::shared_ptr<AABBTree> & rootB,
-  std::vector<std::pair<std::shared_ptr<Object>,std::shared_ptr<Object> > > & 
+  std::vector<std::pair<std::shared_ptr<Object>,std::shared_ptr<Object> > > &
     leaf_pairs)
 {
     std::list<std::pair<std::shared_ptr<Object>,std::shared_ptr<Object>>> queue;
@@ -23,14 +23,7 @@ void find_all_intersecting_pairs_using_AABBTrees(
         
         if(!nodeA && !nodeB)
         {
-            if(box_box_intersect(nodeA->left->box,nodeB->left->box))
-                queue.emplace_back(nodeA->left,nodeB->left);
-            if(box_box_intersect(nodeA->left->box,nodeB->right->box))
-                queue.emplace_back(nodeA->left,nodeB->right);
-            if(box_box_intersect(nodeA->right->box,nodeB->left->box))
-            queue.emplace_back(nodeA->right,nodeB->left);
-            if(box_box_intersect(nodeA->right->box,nodeB->right->box))
-            queue.emplace_back(nodeA->right,nodeB->right);
+            leaf_pairs.emplace_back(ObjectA,ObjectB);
         }
         else if(!nodeA)
         {
@@ -46,6 +39,16 @@ void find_all_intersecting_pairs_using_AABBTrees(
             if(box_box_intersect(nodeA->right->box,ObjectB->box))
                 queue.emplace_back(nodeA->right,ObjectB);
         }
-        else leaf_pairs.emplace_back(ObjectA,ObjectB);
+        else
+        {
+            if(box_box_intersect(nodeA->left->box,nodeB->left->box))
+                queue.emplace_back(nodeA->left,nodeB->left);
+            if(box_box_intersect(nodeA->left->box,nodeB->right->box))
+                queue.emplace_back(nodeA->left,nodeB->right);
+            if(box_box_intersect(nodeA->right->box,nodeB->left->box))
+            queue.emplace_back(nodeA->right,nodeB->left);
+            if(box_box_intersect(nodeA->right->box,nodeB->right->box))
+            queue.emplace_back(nodeA->right,nodeB->right);
+        }
     }
 }
